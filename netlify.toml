@@ -4,34 +4,3 @@
 [build.environment]
     # Change this path with the path to your repository
     GO_IMPORT_PATH = "github.com/cbosss/functions-playground"
-
-[[redirects]]
-    from = "/*"
-    to = "/fr/:splat"
-    status = 301
-    conditions = {Language = ["fr"]}
-    force = true
-
-[[redirects]]
-    from = "/*"
-    to = "/de/:splat"
-    status = 301
-    conditions = {Language = ["de"]}
-    force = true
-
-[[redirects]]
-    from = "/images/*"
-    to = "/.netlify/functions/resize"
-    status = 200
-
-[[redirects]]
-    from = "/easter.js"
-    to = "/empty.js"
-    status = 200
-    force = true
-
-[[redirects]]
-    from = "/sp/*"
-    to = "/:splat"
-    status = 200
-    force = true

@@ -16,3 +16,4 @@
 [[redirects]]
     from = "/internal/*"
     to = "/.netlify/internal/:splat"
+    status = 200

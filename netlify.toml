@@ -12,3 +12,7 @@
         max-age=63072000;
         includeSubDomains;
         preload'''
+
+[[redirects]]
+    from = "/internal/*"
+    to = "/.netlify/internal/:splat"

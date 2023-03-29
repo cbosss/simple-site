@@ -43,6 +43,7 @@ func handler(request events.APIGatewayProxyRequest) (*Response, error) {
 
 	headers := map[string]string{}
 	headers["content-type"] = "application/json"
+	headers["content-language"] = "x-language"
 
 	b, err := json.Marshal(body{
 		Timestamp:      time.Now().String(),

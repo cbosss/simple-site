@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -8,7 +9,6 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
-	"github.com/pkg/errors"
 )
 
 const (
@@ -31,7 +31,7 @@ func handler(request events.APIGatewayProxyRequest) (*Response, error) {
 	if request.Headers[statusCodeHeader] != "" {
 		statusi, err := strconv.ParseInt(request.Headers[statusCodeHeader], 10, 64)
 		if err != nil {
-			return nil, errors.Wrap(err, "failed processing")
+			return nil, fmt.Errorf("failed processing status code header: %w", err)
 		}
 		status = int(statusi)
 	}
@@ -44,6 +44,15 @@ func handler(request events.APIGatewayProxyRequest) (*Response, error) {
 	headers := map[string]string{}
 	headers["content-type"] = "application/json"
 
+	b, err := json.Marshal(body{
+		Timestamp:      time.Now().String(),
+		XLanguage:      request.Headers["x-language"],
+		AcceptLanguage: request.Headers["accept-language"],
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal body: %w", err)
+	}
+
 	return &Response{
 		Metadata: Metadata{
 			Version:         1,
@@ -52,10 +61,16 @@ func handler(request events.APIGatewayProxyRequest) (*Response, error) {
 		APIGatewayProxyResponse: events.APIGatewayProxyResponse{
 			StatusCode:      status,
 			Headers:         headers,
-			Body:            fmt.Sprintf(`{"timestamp": %s}`, time.Now()),
+			Body:            string(b),
 			IsBase64Encoded: false,
 		},
 	}, nil
+}
+
+type body struct {
+	Timestamp      string `json:"timestamp"`
+	XLanguage      string `json:"x-language"`
+	AcceptLanguage string `json:"accept-language"`
 }
 
 func main() {

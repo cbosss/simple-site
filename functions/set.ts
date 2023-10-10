@@ -13,12 +13,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
 		siteID: event.headers["x-nf-site-id"],
 	});
 
-
-
-	return {
-		statusCode: 200,
-		body: JSON.stringify({ message: "Hello World" }),
-	};
+	await blobs.set(event.headers["nf-key"], event.headers["nf-value"]);
 };
 
 export { handler };

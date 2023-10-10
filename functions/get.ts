@@ -2,6 +2,7 @@ import type { Handler, HandlerEvent, HandlerContext } from "@netlify/functions";
 import { Blobs } from "@netlify/blobs";
 
 const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
+	fetch("www.netlify.com")
 	const rawData = Buffer.from(context.clientContext.custom.blobs, "base64");
 	const data = JSON.parse(rawData.toString("ascii"));
 	const blobs = new Blobs({
@@ -12,6 +13,8 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
 		context: `deploy:${event.headers["x-nf-deploy-id"]}`,
 		siteID: event.headers["x-nf-site-id"],
 	});
+
+
 
 	return {
 		statusCode: 200,

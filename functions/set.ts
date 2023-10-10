@@ -14,6 +14,10 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
 	});
 
 	await blobs.set(event.headers["nf-key"], event.headers["nf-value"]);
+
+	return {
+		statusCode: 200,
+	}
 };
 
 export { handler };

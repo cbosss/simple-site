@@ -20,3 +20,5 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
         body: value,
     }
 };
+
+export { handler };

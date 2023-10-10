@@ -1,12 +1,10 @@
 import type { Handler, HandlerEvent, HandlerContext } from "@netlify/functions";
 import { Blobs } from "@netlify/blobs";
-import fetch from 'node-fetch';
 
 const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
 	const rawData = Buffer.from(context.clientContext.custom.blobs, "base64");
 	const data = JSON.parse(rawData.toString("ascii"));
 	const blobs = new Blobs({
-		fetcher: fetch,
 		authentication: {
 			contextURL: data.url,
 			token: data.token,

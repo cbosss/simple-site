@@ -4,6 +4,7 @@ import {Blobs} from "@netlify/blobs";
 const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
     const rawData = Buffer.from(context.clientContext.custom.blobs, "base64");
     const data = JSON.parse(rawData.toString("ascii"));
+    console.log("DATA: ", data);
     const blobs = new Blobs({
         authentication: {
             contextURL: data.url,

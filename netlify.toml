@@ -5,15 +5,7 @@
     # Change this path with the path to your repository
     GO_IMPORT_PATH = "github.com/cbosss/functions-playground"
 
-[[headers]]
-    for = "/*"
-    [headers.values]
-        Strict-Transport-Security = '''
-        max-age=63072000;
-        includeSubDomains;
-        preload'''
-
 [[redirects]]
-    from = "/internal/*"
-    to = "/.netlify/internal/:splat"
-    status = 200
+	from = "/greet/*"
+	to = "/en-ca/greet/:splat"
+	country = "CA"
